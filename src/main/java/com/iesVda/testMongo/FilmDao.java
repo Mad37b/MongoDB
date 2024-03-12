@@ -3,6 +3,9 @@ package com.iesVda.testMongo;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+
+import static org.bson.codecs.configuration.CodecRegistries.*;
+
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.bson.*;
@@ -10,6 +13,7 @@ import static com.mongodb.client.model.Filters.*;
 import java.util.*;
 import com.mongodb.*;
 import com.mongodb.client.*;
+import com.mongodb.client.model.ReturnDocument;
 
 public class FilmDao implements DaoInterface<movies> {
 
@@ -21,49 +25,42 @@ public class FilmDao implements DaoInterface<movies> {
 	
 	CodecRegistry pojoCodecRegistry;
 	
+	//CodecRegistries fromProviders;
+	
+	
 	public ObjectId id;
 
-	FilmDao(String string) {
+	public FilmDao() {
 
 		// Establecer Conexion 
 		
 		
 		conexion = this.getConnection();
 		database = conexion.getDatabase("sample_mflix").withCodecRegistry(pojoCodecRegistry);
+		pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 		collection = database.getCollection("movies",movies.class)
 	;}
 
 
 	private MongoClient getConnection() {
 		String url = "mongodb+srv://Mad37b:Pascal@mad37b.vqsepsr.mongodb.net/?retryWrites=true&w=majority";
-		pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
-		fromProviders(PojoCodecProvider.builder().automatic(true).build());
+		CodecRegistry  pojoCodecRegistry  = fromProviders(PojoCodecProvider.builder().automatic(true).build());
 		MongoClient mongoClntObj = MongoClients.create(url);
 		return mongoClntObj;
 	}
 
-	private void fromProviders(PojoCodecProvider pojoCodecProvider) {
-		// TODO Auto-generated method stub
-		
-	}
 
 
-	@Override
+
 	public movies get(movies t) {
-		movies AuxiliarFilm = new movies();
-		String FilmName = t.getTitle();
-		collection = database.getCollection("movies");
-		Bson equalComp = eq("title", FilmName);
-		Document doc = collection.find(equalComp).first();
-		// AuxiliarFilm=PopulateObject(doc);
-		return AuxiliarFilm;
+	return t;	
 	}
 
-	public movies get(String Title) {
+	public movies getmoviebyTitle(String Title) {
 		movies AuxiliarFilm = new movies();
-		collection = database.getCollection("movies");
+	
 		Bson equalComp = eq("title", Title);
-		Document doc = collection.find(equalComp).first();
+		AuxiliarFilm= collection.find(equalComp).first();
 		// AuxiliarFilm=PopulateObject(doc);
 		return AuxiliarFilm;
 	}
@@ -76,9 +73,13 @@ public class FilmDao implements DaoInterface<movies> {
 
 	@Override
 	public movies save(movies t) {
-		// TODO Auto-generated method stub
-		return null;
+		movies newmovies = new movies ();
+		collection.insertOne(newmovies);
+		
+		return t;
 	}
+	
+	
 
 	@Override
 	public movies update(movies t, String[] params) {

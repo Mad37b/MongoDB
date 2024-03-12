@@ -15,7 +15,6 @@ int fieldCounter;
 
 FilmDao newDao = new FilmDao();
 movies newMovies = new movies();
-movies.setTitle(setTitle()));
 newDao.save(newMovies);
 
 
@@ -30,10 +29,9 @@ newDao.save(newMovies);
 	<%
 	Document result;
 	//initialize driver class
-	newMovies = new movies();
-	
-	
-	out.println("Film " + "<BR>"+result.toJson() + "<BR>");
+	newUtil = new Util();
+	result = newUtil.findFilm("Back to the Future");
+	out.println("Film " + result.toJson() + "<BR>");
 	%>
 	
 	

@@ -10,31 +10,31 @@ public class movies {
 
 	/** Atributos de la clase Film **/
 
-	String[] id;
-	String plot;
-	List<String> genres;
-	int runtime;
+	private String[] id;
+	private String plot;
+	private List<String> genres;
+	private int runtime;
 	
-	String poster;
-	String title;
+	private String poster;
+	private String title;
 	@BsonProperty(value="fulplot")
-	String fullplot;
-	String[] Languajes;
+	private String fullplot;
+	private String[] Languajes;
 	@BsonProperty(value="released")
-	String releasedDate;
-	List<String> directors;
-	List<String> winners;
-	List<String> Countries;
-	List<String> cast;
-	String rated;
-	Imdb imdbReference;
-	String lastupdated;
-	Awards theAwards;
-	int year;
-	char[] countries;
-	String type;
-	int num_mflix_coments;
-	int run_time;
+	private String releasedDate;
+	private List<String> directors;
+	private List<String> winners;
+	private List<String> Countries;
+	private List<String> cast;
+	private String rated;
+	private Imdb imdbReference;
+	private String lastupdated;
+	private Awards theAwards;
+	private int year;
+	private char[] countries;
+	private String type;
+	private int num_mflix_coments;
+	private int run_time;
 
 	/** Objetos de la clase Film **/
 
